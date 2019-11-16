@@ -39,4 +39,12 @@ abstract class AbstractController{
         }
         // - - - подключаем необходимый вид
     }
+    
+    /**
+     * Перемещает пользователя на главную страницу сайта
+     */
+    public function goto_home(){
+        header('Location: /');
+        die();
+    }
 }
