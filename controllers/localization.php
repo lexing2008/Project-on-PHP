@@ -36,14 +36,4 @@ class Localization extends AbstractController {
         header('Location: ' . $_SERVER['HTTP_REFERER'] );
         die();
     }
-
-    
-    
-    
-    
-    public function pri( $a ){
-        echo '<pre>';
-        print_r($a);
-        echo '</pre>';
-    }
 }
