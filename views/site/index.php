@@ -5,7 +5,7 @@ use Models\User;
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><?=__('Фамилия')?>Тестовое задание | Главная страница</title>
+<title><?=__('Тестовое задание | Главная страница')?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="public/css/style.css" type="text/css">
 </head>
