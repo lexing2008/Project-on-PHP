@@ -4,14 +4,14 @@ function validation_field_email(){
     email = $(field).val();
     if( email.length == 0 ){
         $(field).parent().parent().addClass('field_error');
-        add_message_error('email', ' - Поле "Email" не должно быть пустым');
+        add_message_error('email', a(' - Поле "Email" не должно быть пустым') );
     } else {
         if ( is_valid_email(email) ){
             $(field).parent().parent().removeClass('field_error');
             remove_message_error('email');
         } else {
             $(field).parent().parent().addClass('field_error');
-            add_message_error('email', ' - Поле "Email" некорректно');
+            add_message_error('email', a(' - Поле "Email" некорректно') );
         }
     }
 }
@@ -22,14 +22,14 @@ function validation_field_password(){
     password = $(field).val();
     if( password.length == 0 ){
         $(field).parent().parent().addClass('field_error');
-        add_message_error('password', ' - Поле "Пароль" не должно быть пустым');        
+        add_message_error('password', a(' - Поле "Пароль" не должно быть пустым') );
     } else {
         if ( password.length >= 8 ){
             $(field).parent().parent().removeClass('field_error');
             remove_message_error('password');
         } else {
             $(field).parent().parent().addClass('field_error');
-            add_message_error('password', ' - Поле "Пароль" некорректно');
+            add_message_error('password', a(' - Поле "Пароль" некорректно') );
         }
     }
 }
