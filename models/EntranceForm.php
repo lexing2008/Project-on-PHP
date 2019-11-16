@@ -17,7 +17,7 @@ class EntranceForm extends AbstractForm {
      */
     public function validation(){
         if( $this->is_form_submit() ){
-            if( $this->check_anti_csrf_token() ){
+            if( !$this->check_anti_csrf_token() ){
                 $this->add_field_error( __('Анти CSRF токен поддельный') );
             }
             if( empty($this->fields_values['email']) ){
