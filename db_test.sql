@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 16 2019 г., 12:25
+-- Время создания: Ноя 17 2019 г., 12:53
 -- Версия сервера: 5.5.62
 -- Версия PHP: 7.3.9
 
@@ -82,6 +82,7 @@ INSERT INTO `langs` (`word`, `locale`, `translate`) VALUES
 ('Регистрация', 'en_US', 'Registration'),
 ('Регистрация пользователя', 'en_US', 'User registration'),
 ('Телефон', 'en_US', 'Phone'),
+('Тестовое задание | Главная страница', 'en_US', 'Test task | Home page'),
 ('Тестовое задание | Страница профайла', 'en_US', 'Test task | Profile Page'),
 ('У Вас есть возможность', 'en_US', 'You have a chance'),
 ('Фамилия', 'en_US', 'Surname'),
@@ -108,13 +109,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `users`
---
-
-INSERT INTO `users` (`id`, `surname`, `name`, `phone`, `email`, `password`, `file_photo`, `about`) VALUES
-(1, 'Согоян', 'Алексей', '80298087022', 'lexing2008@yandex.ru', 'd9b1d7db4cd6e70935368a1efb10e377', '', '');
-
---
 -- Индексы сохранённых таблиц
 --
 
@@ -128,7 +122,8 @@ ALTER TABLE `langs`
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email` (`email`,`password`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -138,7 +133,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
