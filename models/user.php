@@ -67,4 +67,31 @@ class User {
         ));
         return $statement->fetch();
     }
+    
+    /** Добавляет пользователя с передаваемыми параметрами в базу данных
+     * 
+     * @param type $surname Фамилия
+     * @param type $name Имя
+     * @param type $phone Телефон
+     * @param type $email Электронная почта
+     * @param type $password Пароль
+     * @param type $about О себе
+     * @param type $file_name Имя файла изображения
+     */
+    public static function insert_into_database( $surname, $name, $phone, $email, $password, $about, $file_name ){
+        // создаем пользователя в БД
+        $db = DB::getInstance();
+
+        $statement = $db->prepare('INSERT INTO users (surname, name, phone, email, password, about, file_photo)
+            VALUES(:surname, :name, :phone, :email, :password, :about, :file_photo)');
+        $statement->execute(array(
+            'surname' => $surname,
+            'name' => $name,
+            'phone' => $phone,
+            'email' => $email,
+            'password' => md5(md5($password)),
+            'about' => $about,
+            'file_photo' => $file_name,
+        ));
+    }
 }
