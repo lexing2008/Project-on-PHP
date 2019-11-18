@@ -47,19 +47,9 @@ class Site extends AbstractController {
         
         if( $form->is_form_submit() && $form->is_valid() ){
             // создаем пользователя в БД
-            $db = DB::getInstance();
-
-            $statement = $db->prepare('INSERT INTO users (surname, name, phone, email, password, about, file_photo)
-                VALUES(:surname, :name, :phone, :email, :password, :about, :file_photo)');
-            $statement->execute(array(
-                'surname' => $form->get('surname'),
-                'name' => $form->get('name'),
-                'phone' => $form->get('phone'),
-                'email' => $form->get('email'),
-                'password' => md5(md5($form->get('password'))),
-                'about' => $form->get('about'),
-                'file_photo' => $form->get('file_name'),
-            ));
+            User::insert_into_database($form->get('surname'), $form->get('name'), $form->get('phone'), 
+                                        $form->get('email'), $form->get('password'), $form->get('about'), 
+                                        $form->get('file_name') );
 
             if( User::login( $form->get('email'), $form->get('password') ) ){
                 header('Location: index.php?controller=site&action=profile');    
