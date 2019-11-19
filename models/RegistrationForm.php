@@ -16,6 +16,7 @@ class RegistrationForm extends AbstractForm {
      * Конструктор формы регистрации
      */
     public function __construct() {
+        parent::__construct();
         $this->add_field_img();
     }
 
