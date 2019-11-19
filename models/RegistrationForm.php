@@ -13,6 +13,14 @@ use Core\Helpers\Helper;
 class RegistrationForm extends AbstractForm {
 
     /**
+     * Конструктор формы регистрации
+     */
+    public function __construct() {
+        $this->add_field_img();
+    }
+
+    
+    /**
      * Валидация полей формы
      * @return bool валидна ли форма
      */
@@ -104,5 +112,12 @@ class RegistrationForm extends AbstractForm {
                 Image::scale($path_thumbs, $path, 250, 250, 80);
             }
         }        
+    }
+    
+    /**
+     * Добавление поля изображения в fields_values
+     */
+    public function add_field_img(){
+        $this->fields_values['file_name'] = '';
     }
 }
