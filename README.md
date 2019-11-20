@@ -1,5 +1,7 @@
 # Project-on-PHP
 
+Просмотреть проект можно тут: http://project-on-php.zzz.com.ua/
+
 Шаги:
 1. Используем db_test.sql для создания базы данных
 2. В конфиге config\config.php изменяем на свои
