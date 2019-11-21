@@ -91,11 +91,12 @@ class RegistrationForm extends AbstractForm {
      * Загрузка файла фотографии на сервер
      */
     private function upload_file_photo(){
-        $arr_ext = array('jpeg', 'jpg', 'gif', 'png');
+
+        $arr_ext = ['jpeg', 'jpg', 'gif', 'png'];
         $path_parts = pathinfo($_FILES['file_photo']['name']);
         // устраняем проблему с регистром букв расширения файла
         $ext = strtolower($path_parts['extension']);
-        if( !in_array($ext, $arr_ext) ){
+        if( !in_array($ext, $arr_ext) || !$this->check_mime_image_file() ){
             $this->add_field_error( __('Вы загрузили файл неподдерживаемого формата. Допустимые форматы файлов: JPEG, JPG, GIF, PNG') );
         } else {
             // проверяем разрешение изображения
@@ -115,6 +116,21 @@ class RegistrationForm extends AbstractForm {
         }        
     }
     
+    /**
+     * Проверка MIME TYPE файла
+     * @return bool
+     */
+    public function check_mime_image_file(){
+        // проверка заголовка файла
+        $arr_mime = ['image/jpeg', 'image/png', 'image/gif'];
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $_FILES['file_photo']['tmp_name'] );
+        finfo_close($finfo);
+        // - - - проверка заголовка файла
+        return in_array($mime, $arr_mime);
+    }
+
+
     /**
      * Добавление поля изображения в fields_values
      */
