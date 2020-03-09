@@ -13,7 +13,7 @@ use Models\User;
 <body>
     <div class="wr">
         <?php
-        include 'header.php';?>
+        require 'header.php';?>
 
         <h1>
             <?=__('Профайл')?>

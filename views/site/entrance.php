@@ -10,11 +10,11 @@
 <body>
     <div class="wr">
         <?php
-        include 'header.php';?>
+        require 'header.php';?>
             <h1><?=__('Вход')?></h1>
             <div>
                 <?php
-                include 'form_messages.php';?>
+                require 'form_messages.php';?>
                 <form id="form_entrance" name="form_entrance" enctype="multipart/form-data" method="post">
                     <table width="600">
                     <tr>

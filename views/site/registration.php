@@ -10,11 +10,11 @@
 <body>
     <div class="wr">
         <?php
-        include 'header.php';?>
+        require 'header.php';?>
             <h1><?=__('Регистрация')?></h1>
             <div>
                 <?php
-                include 'form_messages.php';?>
+                require 'form_messages.php';?>
                 <form id="form_registration" name="form_registration" id="form_registration" enctype="multipart/form-data" method="post">
                     <table border="0">
                     <tr>
