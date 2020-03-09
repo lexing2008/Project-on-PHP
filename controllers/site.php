@@ -3,10 +3,6 @@
 namespace Controllers;
 
 use Models\User;
-use Config\Config;
-use Core\AntiCSRF;
-use Core\Lang\Lang;
-use DB\DB;
 use Models\EntranceForm;
 use Models\RegistrationForm;
 
