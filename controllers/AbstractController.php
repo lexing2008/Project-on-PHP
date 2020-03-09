@@ -7,12 +7,12 @@ namespace Controllers;
  */
 abstract class AbstractController{
     
-    /** Узел распределения
-     * 
-     * @param type $request 
+    /**
+     * Узел распределения запроса
+     * @param string $action Название вызываемого action 
      */
-    public function node( $action ){
-
+    public function action(string $action): void
+    {
         $method_name = 'p_' . $action;
         if( method_exists($this, $method_name) ) {
             $this->$method_name();
@@ -21,13 +21,13 @@ abstract class AbstractController{
         }
     }
     
-    
-    /** Подключает необходимый View
-     * 
+    /** 
+     * Подключает необходимый View
      * @param string $view_tpl_file имя файла View
      * @param array $site передаваемы во View данные
      */
-    public function render($view_tpl_file, $site){
+    public function render(string $view_tpl_file, array $site): void
+    {
         // подключаем необходимый вид 
         $view_tpl_file = 'views/site/' . $view_tpl_file;
         if(file_exists($view_tpl_file) ){
@@ -43,7 +43,8 @@ abstract class AbstractController{
     /**
      * Перемещает пользователя на главную страницу сайта
      */
-    public function goto_home(){
+    public function goto_home(): void
+    {
         header('Location: /');
         die();
     }

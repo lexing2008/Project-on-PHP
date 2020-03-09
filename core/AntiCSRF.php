@@ -8,11 +8,13 @@ use Config\Config;
  * Класс для работы с токенами защищающими от CSRF атаки
  */
 class AntiCSRF {
-    /** Генерирует токен
-     * 
+
+    /** 
+     * Генерирует токен
      * @return string токен
      */
-    public static function generate_token(){
+    public static function generate_token(): string
+    {
         $salt = rand(1000000,99999999);
         return self::get_token($salt); 
     }
@@ -22,7 +24,8 @@ class AntiCSRF {
      * @param string $salt соль
      * @return string токен формы
      */
-    public static function get_token($salt){
+    public static function get_token(string $salt): string
+    {
         $config = Config::getInstance();
         return $salt . ':' . md5( $salt . $config->get('CSRF_SECRETKEY')  ); 
     }
@@ -32,8 +35,9 @@ class AntiCSRF {
      * @param string $token Токен формы
      * @return bool Истина если верный токен
      */
-    public static function check_token( $token ){
+    public static function check_token(string $token): bool
+    {
         $arr = split(':', $token);
         return self::get_token($arr[0]) == $token;
-    }    
+    }
 }

@@ -12,22 +12,23 @@ use Models\RegistrationForm;
 
 /**
  * Контроллер Site
- *
+ * Главный контроллер сайта
+ * Отвечает за такие страницы: Главная, Профайл пользователя, Регистрация, Вход, Выход
+ * 
  * @author Алексей Согоян
  */
 class Site extends AbstractController {
 
-    
     /**
      * Главная страница
      */
     public function p_index(){
-       
+
         $this->render('index.php', $site);
     }
 
     /**
-     * Cтраница профайла
+     * Cтраница профайла пользователя
      */
     public function p_profile(){
         // получаем информацию о текущем пользователе
@@ -66,23 +67,23 @@ class Site extends AbstractController {
      * Страница входа для администратора
      */
     public function p_entrance(){
-        $site = array();
+        $site = [];
         // массив ошибок заполнения формы
         
         $form = new EntranceForm();
         $form->set_fields_values($_POST);
 
         if( $form->is_form_submit() && $form->validation() ){
-            if( !User::login( $form->get('email'), $form->get('password') ) )
+            if( !User::login( $form->get('email'), $form->get('password') ) ){
                 $form->add_field_error( __('Некорректные "Email" или "Пароль"') );
-            else {
+            } else {
                 header('Location: index.php?controller=site&action=profile');
                 die();
             }
         }
-        
+
         $site['form'] = $form->get_form();
-        
+
         $this->render('entrance.php', $site);
     }
 
@@ -91,7 +92,9 @@ class Site extends AbstractController {
      * Страница выхода
      */
     public function p_exit(){
-        unset( $_SESSION['user'] );
+        // выходим
+        User::logout();
+        // отправляем на главную
         $this->goto_home();
     }
 }

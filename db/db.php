@@ -1,9 +1,10 @@
 <?php
 namespace DB;
 
-Use Config\Config;
-Use Core\Patterns\Singleton;
-Use PDO;
+use Config\Config;
+use Core\Patterns\Singleton;
+use PDO;
+use PDOStatement;
 use PDOException;
 /**
  * Класс работы с БД
@@ -13,13 +14,18 @@ use PDOException;
 class DB {
     use Singleton;
     
+    /**
+     * Объект PDO
+     * @var PDO 
+     */
     private $pdo = NULL;
     
-    /** Соединение с базой данныз Mysql
-     * 
+    /** 
+     * Соединение с базой данныз Mysql
      * @throws Exception
      */
-    public function connect(){
+    public function connect(): void
+    {
         $config = Config::getInstance();
 
         $dsn = 'mysql:host=' . $config->get('DB_HOST') .';dbname=' . $config->get('DB_NAME') .';charset=utf8';
@@ -31,32 +37,40 @@ class DB {
         $this->pdo = new PDO($dsn, $config->get('DB_USER'), $config->get('DB_PASSWORD'), $options);
     }
     
-    /** Возврашает объект PDO
-     * 
+    /** 
+     * Возврашает объект PDO
      * @return PDO объект PDO
      */
-    public function pdo(){
+    public function pdo(): PDO 
+    {
         return $this->pdo;
     }
     
-
-    /** Выполняет SQL запрос к БД
-     * 
+    /** 
+     * Выполняет SQL запрос к БД
      * @param string $sql
-     * @return type результат запроса
+     * @return PDOStatement результат запроса
      */
-    public function query( $sql ){
+    public function query(string $sql): PDOStatement
+    {
         return $this->pdo->query($sql);
     }
     
-    public function prepare( $sql ){
+    /**
+     * Подготовленный SQL запрос
+     * @param string $sql
+     * @return PDOStatement результат запроса
+     */
+    public function prepare(string $sql): PDOStatement
+    {
         return $this->pdo->prepare($sql);
     }
     
     /**
      * Закрытие соединения с БД Mysql
      */
-    public function close(){
+    public function close(): void
+    {
         $this->pdo = NULL;
     }
 }

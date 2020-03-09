@@ -4,21 +4,24 @@ namespace Core\Image;
 
 /**
  * Класс для работы с изображениями
+ * Позволяе изменить размер изображения
  */
 class Image {
 
-    /** Изменяет размер изображения $fin 
+    /** 
+     * Изменяет размер изображения $fin 
      * вмисывая его в рамку с размерами $neww и $newh
      * и сохраняяя в $fout с качеством $quality
      * 
-     * @param type $fout выходной файл
-     * @param type $fin входной файл
-     * @param type $neww ширина рамки, в котору требуется вписать исходное изображдение
-     * @param type $newh высота рамки, в котору требуется вписать исходное изображдение
-     * @param type $quality качество сжатия [1..100]
+     * @param string $fout выходной файл
+     * @param string $fin входной файл
+     * @param int $neww ширина рамки, в котору требуется вписать исходное изображдение
+     * @param int $newh высота рамки, в котору требуется вписать исходное изображдение
+     * @param int $quality качество сжатия [1..100]
      * @return boolean
      */
-    public static function scale($fout, $fin, $neww, $newh, $quality) {
+    public static function scale(string $fout, string $fin, int $neww, int $newh, int $quality): bool
+    {
         // сохраняем в себя
         if ($fout === NULL)
             $fout = $fin;
@@ -66,7 +69,7 @@ class Image {
      * @param string $fin путь к файлу
      * @return image дескриптор изображения
      */
-    protected static function image_create($ext, $fin) {
+    protected static function image_create(string $ext, string $fin) {
         switch ($ext) {
             case 1: { // GIF		
                     $im = imagecreatefromgif($fin); /* попытка открыть */
@@ -93,13 +96,13 @@ class Image {
     }
 
     /**
-     *  выбор способа закрытия файла в зависимости от типа изображения 
+     * выбор способа закрытия файла в зависимости от типа изображения 
      * @param image $im1 дескриптор изображения
      * @param string $fout путь к выходному файлу
      * @param string $ext расширение файла
      * @param int $quality качество сжатия
      */
-    protected static function image_save($im1, $fout, $ext, $quality) {
+    protected static function image_save($im1, string $fout, string $ext, int $quality) {
         switch ($ext) {
             case 1: { // GIF			
                     imagegif($im1, $fout, $quality); /* выводим изображение в браузер */
@@ -119,5 +122,4 @@ class Image {
                 }
         }
     }
-
 }

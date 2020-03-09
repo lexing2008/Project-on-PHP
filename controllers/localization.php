@@ -4,18 +4,18 @@ namespace Controllers;
 
 use Config\Config;
 use Core\Localization\LocalizationParser;
+use Core\Helpers\DatetimeHelper;
 
 /**
  * Контроллер Localization
- *  Локализация и перевод сайта на другие языки
+ * Локализация и перевод сайта на другие языки
  * 
  * @author Алексей Согоян
  */
 class Localization extends AbstractController {
 
-    
     /**
-     * Главная страница
+     * Главная страница сайта
      */
     public function p_index(){
         $parser = new LocalizationParser('en_US');
@@ -31,7 +31,7 @@ class Localization extends AbstractController {
 
         $lang =  $_GET['lang'];
         if( in_array($lang, $config->get('LOCALES')) ){
-            setcookie('LANG', $lang, time() + 3600 * 24 * 365, '/', $config->get('DOMAIN') );
+            setcookie('LANG', $lang, time() + DatetimeHelper::YEAR_SECONDS, '/', $config->get('DOMAIN') );
         }
         header('Location: ' . $_SERVER['HTTP_REFERER'] );
         die();

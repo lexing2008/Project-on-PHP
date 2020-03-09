@@ -8,6 +8,8 @@ use Core\Localization\Localization;
 
 /**
  * Класс приложения MVC
+ * Обеспечивает выполнение приложения
+ * Создавая сайт мы создаем объект приложения
  */
 class App{
     use Singleton;
@@ -26,10 +28,11 @@ class App{
         $db->connect();
         
         // установка локали
-        if( !empty($_COOKIE['LANG']) && in_array($_COOKIE['LANG'], $config->get('LOCALES')) )
+        if( !empty($_COOKIE['LANG']) && in_array($_COOKIE['LANG'], $config->get('LOCALES')) ){
             $lang = $_COOKIE['LANG'];
-        else 
+        } else {
             $lang = $config->get('DEFAULT_LOCALE');
+        }
 
         $locale = Localization::getInstance();
         $locale->set_locale( $lang );
@@ -38,17 +41,16 @@ class App{
 
         if( empty($_GET) ){
             // устанавливаем конктроллер по умолчанию
-            $controller_name = 'site';
-            $action = 'index';
+            $controller_name    = 'site';
+            $action             = 'index';
         } else {
-            $controller_name = $_GET['controller'];
-            $action = $_GET['action'];
+            $controller_name    = $_GET['controller'];
+            $action             = $_GET['action'];
         }
         
         $controller_name = 'Controllers\\' . $controller_name;
         if( class_exists($controller_name) ){
-            $controller = new $controller_name;
-            $controller->node($action);
+            (new $controller_name)->action($action);
         } else {
             echo 'Не удалось найти такой контроллер: ';
             echo $controller_name;

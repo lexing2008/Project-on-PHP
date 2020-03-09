@@ -11,23 +11,24 @@ use DB\DB;
  */
 class User {
 
-    /** Осуществляет авторизацию пользователя
-     * 
+    /** 
+     * Осуществляет авторизацию пользователя
      * @param string $email Email пользователя
      * @param string $password пароль пользователя
      * @return bool получилось ли залогиниться
      */
-    public static function login($email, $password){
-        $password = md5(md5($password));
+    public static function login(string $email, string $password): bool
+    {
+        $password = self::get_password_hash($password);
 
         $db = DB::getInstance();
         $statement = $db->prepare('SELECT id, name, surname, email, password
                                     FROM users
                                     WHERE email = :email  AND password = :password LIMIT 1');
-        $statement->execute(array(
-            'email' => $email,
-            'password' => $password,
-        ));
+        $statement->execute([
+            'email'     => $email,
+            'password'  => $password,
+        ]);
         
         if( $statement->rowCount() ){
             $_SESSION['user'] = $statement->fetch();
@@ -36,11 +37,12 @@ class User {
         return !empty($_SESSION['user']);
     }
     
-    /** Возвращает true если пользователь авторизован
-     * 
+    /** 
+     * Возвращает true если пользователь авторизован
      * @return bool 
      */
-    public static function is_auth(){
+    public static function is_auth(): bool
+    {
         return !empty( $_SESSION['user']);
     }
     
@@ -48,8 +50,9 @@ class User {
      * Возвращает ID пользователя
      * @return int ID пользователя
      */
-    public static function user_id(){
-        return $_SESSION['user']['id'];
+    public static function user_id(): int
+    {
+        return (int)$_SESSION['user']['id'];
     }
     
     /**
@@ -57,41 +60,62 @@ class User {
      * @param int $user_id
      * @return array Массив информации о пользователе
      */
-    public static function get_user( $user_id ){
+    public static function get_user(int $user_id): array
+    {
         $db = DB::getInstance();
         $statement = $db->prepare('SELECT id, name, surname, email, phone, password, about, file_photo
                                     FROM users
                                     WHERE id = :id LIMIT 1');
-        $statement->execute(array(
+        $statement->execute([
             'id' => $user_id
-        ));
+        ]);
         return $statement->fetch();
     }
     
-    /** Добавляет пользователя с передаваемыми параметрами в базу данных
+    /** 
+     * Добавляет пользователя с передаваемыми параметрами в базу данных
      * 
-     * @param type $surname Фамилия
-     * @param type $name Имя
-     * @param type $phone Телефон
-     * @param type $email Электронная почта
-     * @param type $password Пароль
-     * @param type $about О себе
-     * @param type $file_name Имя файла изображения
+     * @param string $surname Фамилия
+     * @param string $name Имя
+     * @param string $phone Телефон
+     * @param string $email Электронная почта
+     * @param string $password Пароль
+     * @param string $about О себе
+     * @param string $file_name Имя файла изображения
      */
-    public static function insert_into_database( $surname, $name, $phone, $email, $password, $about, $file_name ){
+    public static function insert_into_database(string $surname, string $name, string $phone, string $email, string $password, string $about, string $file_name ): void
+    {
         // создаем пользователя в БД
         $db = DB::getInstance();
 
         $statement = $db->prepare('INSERT INTO users (surname, name, phone, email, password, about, file_photo)
-            VALUES(:surname, :name, :phone, :email, :password, :about, :file_photo)');
-        $statement->execute(array(
-            'surname' => $surname,
-            'name' => $name,
-            'phone' => $phone,
-            'email' => $email,
-            'password' => md5(md5($password)),
-            'about' => $about,
-            'file_photo' => $file_name,
-        ));
+                                    VALUES(:surname, :name, :phone, :email, :password, :about, :file_photo)');
+        $statement->execute([
+            'surname'       => $surname,
+            'name'          => $name,
+            'phone'         => $phone,
+            'email'         => $email,
+            'password'      => self::get_password_hash($password),
+            'about'         => $about,
+            'file_photo'    => $file_name,
+        ]);
+    }
+
+    /**
+     * Возвращает хэш пароля
+     * @param string $password пароль
+     * @return string хэш пароля
+     */
+    public static function get_password_hash(string $password): string
+    {
+        return password_hash(md5($password), PASSWORD_DEFAULT);
+    }
+    
+    /**
+     * Выход пользователя
+     */
+    public static function logout(): void
+    {
+        unset( $_SESSION['user'] );
     }
 }
