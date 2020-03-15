@@ -26,7 +26,7 @@ class AntiCSRF {
      */
     public static function get_token(string $salt): string
     {
-        $config = Config::getInstance();
+        $config = Config::get_instance();
         return $salt . ':' . md5( $salt . $config->get('CSRF_SECRETKEY')  ); 
     }
     

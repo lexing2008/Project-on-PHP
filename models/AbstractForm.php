@@ -113,7 +113,7 @@ abstract class AbstractForm {
     /**
      * Валидация формы
      */
-    abstract function validation();
+    abstract function validation(): bool;
 
     /**
      * Проверяет была ли отправлена форма

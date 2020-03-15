@@ -12,6 +12,10 @@ use PDOException;
  * @author Lexing
  */
 class DB {
+
+    /**
+     * Делаем из класса Singleton
+     */
     use Singleton;
     
     /**
@@ -26,7 +30,7 @@ class DB {
      */
     public function connect(): void
     {
-        $config = Config::getInstance();
+        $config = Config::get_instance();
 
         $dsn = 'mysql:host=' . $config->get('DB_HOST') .';dbname=' . $config->get('DB_NAME') .';charset=utf8';
         $options = [

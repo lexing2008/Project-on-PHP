@@ -27,7 +27,8 @@ class LocalizationParser {
      * Конструктор
      * @param string $locale локаль
      */
-    public function __construct(string $locale) {
+    public function __construct(string $locale): void
+    {
         $this->locale = $locale;
     }
     
@@ -83,7 +84,7 @@ class LocalizationParser {
      */
     public function save_to_db(string $words): void
     {
-        $db = DB::getInstance();
+        $db = DB::get_instance();
 
         $size = count($words);
         for( $i=0; $i<$size; ++$i ){
@@ -111,7 +112,7 @@ class LocalizationParser {
      */
     public function clear_locale(): void
     {
-        $db = DB::getInstance();
+        $db = DB::get_instance();
         
         $statement = $db->prepare('DELETE FROM langs WHERE locale = :locale AND translate = \'\'');
         $statement->execute([

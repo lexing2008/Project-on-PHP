@@ -18,7 +18,8 @@ class Site extends AbstractController {
     /**
      * Главная страница
      */
-    public function p_index(){
+    public function p_index(): void
+    {
 
         $this->render('index.php', $site);
     }
@@ -26,7 +27,8 @@ class Site extends AbstractController {
     /**
      * Cтраница профайла пользователя
      */
-    public function p_profile(){
+    public function p_profile(): void
+    {
         // получаем информацию о текущем пользователе
         $site['profile'] = User::get_user( User::user_id() );
 
@@ -36,7 +38,8 @@ class Site extends AbstractController {
     /**
      * Страница регистрации
      */
-    public function p_registration(){
+    public function p_registration(): void
+    {
 
         $form = new RegistrationForm();
         $form->set_fields_values($_POST);
@@ -62,7 +65,8 @@ class Site extends AbstractController {
     /**
      * Страница входа для администратора
      */
-    public function p_entrance(){
+    public function p_entrance(): void
+    {
         $site = [];
         // массив ошибок заполнения формы
         
@@ -87,7 +91,8 @@ class Site extends AbstractController {
     /**
      * Страница выхода
      */
-    public function p_exit(){
+    public function p_exit(): void
+    {
         // выходим
         User::logout();
         // отправляем на главную

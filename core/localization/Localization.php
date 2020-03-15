@@ -59,7 +59,7 @@ class Localization {
      */
     public function load_words(): void
     {
-        $db = DB::getInstance();
+        $db = DB::get_instance();
         $statement = $db->prepare('SELECT word, translate
                                     FROM langs
                                     WHERE locale = :locale');

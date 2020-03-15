@@ -21,7 +21,7 @@ class User {
     {
         $password = self::get_password_hash($password);
 
-        $db = DB::getInstance();
+        $db = DB::get_instance();
         $statement = $db->prepare('SELECT id, name, surname, email, password
                                     FROM users
                                     WHERE email = :email  AND password = :password LIMIT 1');
@@ -62,7 +62,7 @@ class User {
      */
     public static function get_user(int $user_id): array
     {
-        $db = DB::getInstance();
+        $db = DB::get_instance();
         $statement = $db->prepare('SELECT id, name, surname, email, phone, password, about, file_photo
                                     FROM users
                                     WHERE id = :id LIMIT 1');
@@ -86,7 +86,7 @@ class User {
     public static function insert_into_database(string $surname, string $name, string $phone, string $email, string $password, string $about, string $file_name ): void
     {
         // создаем пользователя в БД
-        $db = DB::getInstance();
+        $db = DB::get_instance();
 
         $statement = $db->prepare('INSERT INTO users (surname, name, phone, email, password, about, file_photo)
                                     VALUES(:surname, :name, :phone, :email, :password, :about, :file_photo)');

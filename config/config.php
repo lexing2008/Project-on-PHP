@@ -10,11 +10,19 @@ use Core\Localization\Localization;
  * Содержит все настройки и параметры сайта
  */
 class Config {
+
+    /**
+     * Делаем из класса Singleton
+     */
     use Singleton;
+    
+    /**
+     * Делаем из класса Контейнер Свойств
+     */
     use PropertyContainer;
 }
 
-$config = Config::getInstance();
+$config = Config::get_instance();
 $config->set('DB_HOST',         'localhost');
 $config->set('DB_NAME',         'db_test');
 $config->set('DB_USER',         'root');

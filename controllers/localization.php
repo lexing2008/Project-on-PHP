@@ -17,7 +17,8 @@ class Localization extends AbstractController {
     /**
      * Главная страница сайта
      */
-    public function p_index(){
+    public function p_index(): void
+    {
         $parser = new LocalizationParser('en_US');
         $parser->clear_locale();
         $parser->scan_dir( $_SERVER['DOCUMENT_ROOT'] . '/' );
@@ -26,8 +27,9 @@ class Localization extends AbstractController {
     /**
      * Страница смены локали
      */
-    public function p_set_locale(){
-        $config = Config::getInstance();
+    public function p_set_locale(): void
+    {
+        $config = Config::get_instance();
 
         $lang =  $_GET['lang'];
         if( in_array($lang, $config->get('LOCALES')) ){

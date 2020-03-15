@@ -12,19 +12,25 @@ use Core\Localization\Localization;
  * Создавая сайт мы создаем объект приложения
  */
 class App{
+
+    /**
+     * Делаем из класса Singleton
+     */
     use Singleton;
+    
     /**
      * Инициализация приложения
      */
-    public function run(){
-        $config = Config::getInstance();
+    public function run(): void
+    {
+        $config = Config::get_instance();
         // запускаем сессию
         session_name( $config->get('SESSION_NAME') );
         session_set_cookie_params (1400 , '/' , '.' . $config->get('DOMAIN') );
         session_start();
         
         // подключаемся к БД
-        $db = DB::getInstance();
+        $db = DB::get_instance();
         $db->connect();
         
         // установка локали
@@ -34,7 +40,7 @@ class App{
             $lang = $config->get('DEFAULT_LOCALE');
         }
 
-        $locale = Localization::getInstance();
+        $locale = Localization::get_instance();
         $locale->set_locale( $lang );
         $locale->load_words();
         

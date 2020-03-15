@@ -78,7 +78,8 @@ class RegistrationForm extends AbstractForm {
     /**
      * Конструктор формы регистрации
      */
-    public function __construct() {
+    public function __construct(): void
+    {
         parent::__construct();
         $this->add_field_img();
     }
@@ -151,7 +152,8 @@ class RegistrationForm extends AbstractForm {
     /**
      * Загрузка файла фотографии на сервер
      */
-    private function upload_file_photo(){
+    private function upload_file_photo(): void
+    {
 
         $path_parts = pathinfo($_FILES['file_photo']['name']);
         // устраняем проблему с регистром букв расширения файла
@@ -180,7 +182,8 @@ class RegistrationForm extends AbstractForm {
      * Проверка MIME TYPE файла
      * @return bool
      */
-    public function check_mime_image_file(){
+    public function check_mime_image_file(): bool
+    {
         // проверка заголовка файла
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $_FILES['file_photo']['tmp_name'] );
@@ -193,7 +196,8 @@ class RegistrationForm extends AbstractForm {
     /**
      * Добавление поля изображения в fields_values
      */
-    public function add_field_img(){
+    public function add_field_img(): void
+    {
         $this->fields_values['file_name'] = '';
     }
 }
