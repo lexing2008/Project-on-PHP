@@ -15,5 +15,7 @@ require_once 'vendor/autoload.php';
 $app = App::getInstance();
 $app->run();
 
+// ok
+
 
 
